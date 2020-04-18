@@ -3,12 +3,27 @@ import {gql} from 'apollo-boost';
 const getGlobalLatestData = gql`
     {
         GlobalLatestData {
-            confirmed,
-            recovered,
+            cases,
             deaths,
-            active,
-            lastUpdated
+            recovered,
+            updated
         }
     }
 `
-export { getGlobalLatestData }
+
+const getCountriesLatestData = gql`
+    {
+        CountriesLatestData {
+            country,
+            cases,
+            todayCases,
+            deaths,
+            todayDeaths,
+            recovered,
+            active,
+            critical
+        }
+    }
+`
+
+export { getGlobalLatestData, getCountriesLatestData }

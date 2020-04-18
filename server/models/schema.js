@@ -12,31 +12,26 @@ const { GraphQLObjectType,
 const GlobalLatestDataType = new GraphQLObjectType({
     name: "GlobalLatestData",
     fields: () => ({
-        confirmed: { type: GraphQLInt },
-        recovered: { type: GraphQLInt },
+        cases: { type: GraphQLInt },
         deaths: { type: GraphQLInt },
-        active: { type: GraphQLInt },
-        lastUpdated: { type: GraphQLString }
+        recovered: { type: GraphQLInt },
+        updated: { type: GraphQLString }
     })
 })
 
 const CountryLatestDataType = new GraphQLObjectType({
     name: "CountryLatestData", 
     fields: () => ({
-        confirmed: { type: GraphQLInt },
-        confirmedToday: { type: GraphQLInt },
-        recovered: { type: GraphQLInt },
-        deaths: { type: GraphQLInt },
-        deathsToday: { type: GraphQLInt },
         country: { type: GraphQLString },
-        countryCode: { type: GraphQLString },
-        confirmedByDay: { type: GraphQLList(GraphQLInt) },
-        recoveredByDay: { type: GraphQLList(GraphQLInt) },
-        lastUpdated: { type: GraphQLString },
-        active: { type: GraphQLInt },
+        cases: { type: GraphQLInt },
+        todayCases: { type: GraphQLInt },
+        deaths: { type: GraphQLInt },
+        todayDeaths: { type: GraphQLInt },
+        recovered: { type: GraphQLString },
+        active: { type: GraphQLString },
         critical: { type: GraphQLInt },
-        mortalityPer: { type: GraphQLString },
-        recoveredPer: { type: GraphQLString }
+        casesPerOneMillion: { type: GraphQLInt },
+        deathsPerOneMillion: { type: GraphQLString }
     })
 })
 
@@ -46,35 +41,23 @@ const RootQuery = new GraphQLObjectType({
         GlobalLatestData: {
             type: GlobalLatestDataType,
             async resolve(parent, args) {
-                let data = await axios.get('https://covid.delalify.com/api/latest')
-                if (data.status == 200) {                
-                    return data.data.response
-                } else {
-                    return data.data.message
-                }
+                let data = await axios.get('http://api.coronastatistics.live/all')
+                return (data ? data.data : null)
             }
         },
         CountriesLatestData: {
             type: new GraphQLList(CountryLatestDataType),
             async resolve(parent, args) {
-                let data = await axios.get('https://covid.delalify.com/api/countries')
-                if (data.status == 200) {
-                    return data.data.response
-                } else {
-                    return data.data.message
-                }
+                let data = await axios.get('http://api.coronastatistics.live/countries?sort=cases')
+                return (data ? data.data : null)
             }
         },
         CountryLatestData: {
             type: CountryLatestDataType,
             args: {country: {type: GraphQLString}},
             async resolve(parent, args) {
-                let data = await axios.get('https://covid.delalify.com/api/countries')
-                if (data.status == 200) {
-                    return _.find(data.data.response, {country: args.country})
-                } else {
-                    return data.data.message
-                }
+                let data = await axios.get('http://api.coronastatistics.live/countries/' + args.country)
+                return (data ? data.data : null)
             }
         }
         
