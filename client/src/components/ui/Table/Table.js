@@ -42,8 +42,10 @@ class Table extends Component {
     }
     
     handleClick = (e) => {
-        // console.log(e.target.parentNode.getAttribute('data-index'))
-        const country = this.props.countriesStats.countries.filter(country => country.country === e.target.parentNode.getAttribute('data-index'))[0]
+        // console.log(e.target.parentNode.childNodes[1].innerText)
+        const country = e.target.parentNode.getAttribute('data-index') 
+                        ? this.props.countriesStats.countries.filter(country => country.country === e.target.parentNode.getAttribute('data-index'))[0] 
+                        : this.props.countriesStats.countries.filter(country => country.country === e.target.parentNode.childNodes[1].innerText)[0];
         const countryStats = {
             header: country.country,
             cases: parseInt(country.cases),
