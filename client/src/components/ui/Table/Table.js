@@ -1,15 +1,30 @@
-import React, { Component } from 'react'
+// Core Libraries
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import compose from "lodash.flowright";
 import { graphql } from 'react-apollo';
-import {CountryISOCode, CC, FlagIcon} from './Flag.js'
 import { getCode } from 'country-list';
+import {CountryISOCode, CC, FlagIcon} from './Flag.js'
 
-import { getCountriesLatestData } from '../../queries/Queries';
+// Custom Functions
 import { numberWithCommas } from '../../utils/utils';
+import { getCountriesLatestData } from '../../queries/Queries';
+import { updateView } from '../../../store/actions/viewActions';
+import { updateCountryStats } from '../../../store/actions/countryStatsAction';
+import { updateCountriesStats } from '../../../store/actions/countriesStatsActions';
 
+// Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVirus, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 class Table extends Component {
+
+    componentDidUpdate = () => {
+        const { countriesStats, updateCountriesStats, graphQLCountriesLatestData } = this.props;
+        if (countriesStats.countries !== graphQLCountriesLatestData.CountriesLatestData) {
+            updateCountriesStats(graphQLCountriesLatestData.CountriesLatestData)
+        }
+    }
 
     handleSearch = () => {
         let filter, tbody, tr, txtValue;
@@ -26,9 +41,26 @@ class Table extends Component {
         }
     }
     
-    render() {  
-        const {CountriesLatestData} = this.props.getCountriesLatestData;
-        return (CountriesLatestData 
+    handleClick = (e) => {
+        // console.log(e.target.parentNode.getAttribute('data-index'))
+        const country = this.props.countriesStats.countries.filter(country => country.country === e.target.parentNode.getAttribute('data-index'))[0]
+        const countryStats = {
+            header: country.country,
+            cases: parseInt(country.cases),
+            todayCases: parseInt(country.todayCases),
+            deaths: parseInt(country.deaths),
+            todayDeaths: parseInt(country.todayDeaths),
+            recovered: parseInt(country.recovered),
+            active: parseInt(country.active),
+            critical: parseInt(country.critical)
+        }
+        this.props.updateCountryStats(countryStats);
+        this.props.updateView(country.country);
+    }
+
+    render() {
+        const { countriesStats } = this.props;
+        return (countriesStats.countries
             ?
             <div className="table-wrapper">
                 <div className="content-table">
@@ -50,7 +82,7 @@ class Table extends Component {
                                 </tr>
                             </thead>
                             <tbody id="content-data">
-                                {CountriesLatestData
+                                {countriesStats.countries
                                     .filter(country => (country.country !== "Total:" && country.country !== ""))
                                     .map(country => {
                                         let countryCode = (country.country in CountryISOCode) ? CountryISOCode[country.country] : getCode(country.country);
@@ -58,7 +90,7 @@ class Table extends Component {
                                         countryCode = (CC.includes(countryCode)) ? countryCode : "";
 
                                         return (
-                                            <tr key={country.country}>
+                                            <tr key={country.country} data-index={country.country} onClick={this.handleClick}>
                                                 {(countryCode) ? <td className="country-column"><FlagIcon code={countryCode} size="lg"/><span>{country.country}</span></td> : <td className="country-column"><span>{country.country}</span></td>}
                                                 <td className="text-red">{numberWithCommas(country.cases)}<div className="box-green">+ {numberWithCommas(country.todayCases)}</div></td>
                                                 <td className="text-red">{numberWithCommas(country.deaths)}<div className="box-red">+ {numberWithCommas(country.todayDeaths)}</div></td>
@@ -82,4 +114,22 @@ class Table extends Component {
     }
 }
 
-export default graphql(getCountriesLatestData, {name: "getCountriesLatestData"})(Table);
+const mapStateToProps = (state) => {
+    return {
+        countryStats: state.countryStats,
+        countriesStats: state.countriesStats
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateView: (view) => dispatch(updateView(view)),
+        updateCountryStats: (countryStats) => dispatch(updateCountryStats(countryStats)),
+        updateCountriesStats: (countriesStats) => dispatch(updateCountriesStats(countriesStats))
+    }
+}
+
+export default compose(
+    graphql(getCountriesLatestData, {name: "graphQLCountriesLatestData"}),
+    connect(mapStateToProps, mapDispatchToProps)
+)(Table);

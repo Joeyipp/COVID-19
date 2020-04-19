@@ -2,7 +2,7 @@ import React from 'react';
 import CountUp from 'react-countup';
 
 export default function Card(props) {
-    const {card, title, subtitle, updated} = props;
+    const {card, title, subtitle} = props;
     return (
         <div className={card}>   
             <div className="card-block">

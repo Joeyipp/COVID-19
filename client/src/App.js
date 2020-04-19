@@ -2,12 +2,11 @@
 import React, { Component } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 // Components
 import SideNav from './components/ui/SideNav/SideNav';
-import Cards from './components/ui/Card/Cards';
-import Table from './components/ui/Table/Table';
-import Header from './components/ui/Header/Header';
+import Dashboard from './components/ui/Page/Dashboard';
 
 // Apollo client setup
 const client = new ApolloClient({
@@ -15,22 +14,18 @@ const client = new ApolloClient({
 })
 
 class App extends Component {
-    state = {
-        header: "WORLD"
-    }
-
     render() {
         return (
-            <ApolloProvider client={client}>
-            <div>
-            <SideNav />
-            <div className="main">
-                <Header header={this.state.header}/>
-                <Cards />
-                <Table />
-            </div>
-            </div>
-        </ApolloProvider>
+            <BrowserRouter>
+                <ApolloProvider client={client}>
+                    <div>
+                        <SideNav />
+                        <Switch>
+                            <Route exact path='/' component={Dashboard} />
+                        </Switch>
+                    </div>
+                </ApolloProvider>
+            </BrowserRouter>
         )
     }
 }
