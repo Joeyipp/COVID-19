@@ -74,10 +74,12 @@ body::-webkit-scrollbar-thumb {
     font-family: inherit;
     margin-left: 15px;
 }
+
 .header button.return {
     width: 15rem;
     height: auto;
 }
+
 .header button.return .circle {
     -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
@@ -89,6 +91,7 @@ body::-webkit-scrollbar-thumb {
     background: #282936;
     border-radius: 1.625rem;
 }
+
 .header button.return .circle .icon {
     -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
@@ -98,6 +101,7 @@ body::-webkit-scrollbar-thumb {
     margin: auto;
     background: #fff;
 }
+
 .header button.return .circle .icon.arrow {
     -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
@@ -106,6 +110,7 @@ body::-webkit-scrollbar-thumb {
     height: 0.125rem;
     background: none;
 }
+
 .header button.return .circle .icon.arrow::before {
     position: absolute;
     content: '';
@@ -118,6 +123,7 @@ body::-webkit-scrollbar-thumb {
     -webkit-transform: rotate(45deg);
             transform: rotate(45deg);
 }
+
 .header button.return .button-text {
     -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
@@ -134,53 +140,20 @@ body::-webkit-scrollbar-thumb {
     text-align: center;
     text-transform: uppercase;
 }
+
 .header button:hover .circle {
     width: 100%;
 }
+
 .header button:hover .circle .icon.arrow {
     background: #fff;
     -webkit-transform: translate(1rem, 0);
             transform: translate(1rem, 0);
 }
+
 .header button:hover .button-text {
     color: #fff;
 }
-
-.tracking-in-expand {
-	-webkit-animation: tracking-in-expand 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1s both;
-	        animation: tracking-in-expand 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 1s both;
-}
-
-.tracking-in-expand-fast {
-	-webkit-animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.5s both;
-	        animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.5s both;
-}
-
-@-webkit-keyframes tracking-in-expand {
-    0% {
-    letter-spacing: -0.5em;
-    opacity: 0;
-    }
-    40% {
-    opacity: 0.6;
-    }
-    100% {
-    opacity: 1;
-    }
-}
-@keyframes tracking-in-expand {
-    0% {
-    letter-spacing: -0.5em;
-    opacity: 0;
-    }
-    40% {
-    opacity: 0.6;
-    }
-    100% {
-    opacity: 1;
-    }
-}
-  
 
 /* SideNav */
 .navbar {
@@ -375,7 +348,9 @@ margin-top: auto;
 
 .table-heading {
     display: flex;
-    margin-bottom: 8px;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .content-table {
@@ -384,7 +359,7 @@ margin-top: auto;
     margin: 15px 0px;
     padding: 10px;
     font-size: 0.8em;
-    min-width: 700px;
+    min-width: 600px;
     max-height: 620px;
     border-radius: 5px 5px;
     overflow: auto;
@@ -441,7 +416,6 @@ margin-top: auto;
     border: hidden;
     border-bottom: 1.5px solid #eee;
     box-shadow: 0 1px 0 0 #eee;
-    margin: 0px 0px 15px 0px;
     width: 300px;
     margin-left: auto;
     transition: 300ms ease;
@@ -508,6 +482,45 @@ margin-top: auto;
 
 #content-data tr:hover {
     background: lightgray;
+}
+
+#content-data .content-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: end;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 110px;
+}
+
+/* Collapse table */
+.fragment-close {
+    height: 0px;
+    opacity: 0;
+    transition: height 1s;
+}
+
+.fragment-open  {
+    opacity: 1;
+    height: 100px;
+    transition: height 1s;
+}
+
+/* Table Option */
+.content-table .table-heading .table-select {
+    outline: none;
+    border: hidden;
+    border-bottom: 1.5px solid #eee;
+    box-shadow: 0 1px 0 0 #eee;
+    width: 220px;
+    font-weight: bold;
+    margin-left: auto;
+    transition: 300ms ease;
+}
+
+.content-table .table-select:hover {
+    border-bottom: 1.5px solid var(--bg-primary);
+    box-shadow: 0 1px 0 0 #ce93d8;
 }
 
 /* Small screens */

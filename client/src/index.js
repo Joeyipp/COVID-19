@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './animate.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import {createStore} from 'redux';
+import {enableBatching} from 'redux-batched-actions';
 import {Provider} from 'react-redux';
 import rootReducer from './store/reducers/rootReducer';
 
-const store = createStore(rootReducer);
+const store = createStore(enableBatching(rootReducer));
 
 ReactDOM.render(
   <Provider store={store}><App /></Provider>,

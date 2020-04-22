@@ -35,6 +35,38 @@ const CountryLatestDataType = new GraphQLObjectType({
     })
 })
 
+const CoordinateType = new GraphQLObjectType({
+    name: "Coordinate",
+    fields: () => ({
+        latitude: { type: GraphQLString },
+        longitude: { type: GraphQLString }
+    })
+})
+
+const LatestType = new GraphQLObjectType({
+    name: "Latest",
+    fields: () => ({
+        confirmed: { type: GraphQLInt },
+        deaths: { type: GraphQLInt },
+        recovered: { type: GraphQLInt }
+    })
+})
+
+const StateLatestDataType = new GraphQLObjectType({
+    name: "StateLatestData",
+    fields: () => ({
+        id: { type: GraphQLInt },
+        country: { type: GraphQLString },
+        country_code: { type: GraphQLString },
+        country_population: { type: GraphQLInt },
+        province: { type: GraphQLString },
+        county: { type: GraphQLString },
+        last_updated: { type: GraphQLString },
+        coordinates: { type: CoordinateType},
+        latest: { type: LatestType }
+    })
+})
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -58,6 +90,13 @@ const RootQuery = new GraphQLObjectType({
             async resolve(parent, args) {
                 let data = await axios.get('http://api.coronastatistics.live/countries/' + args.country)
                 return (data ? data.data : null)
+            }
+        },
+        StatesLatestData: {
+            type: new GraphQLList(StateLatestDataType),
+            async resolve(parent, args) {
+                let data = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations?source=csbs')
+                return (data ? data.data.locations : null)
             }
         }
         

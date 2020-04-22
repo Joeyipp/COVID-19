@@ -9,7 +9,7 @@ const initState = {
     //     active: "",
     //     critical: ""
     // }
-    countries: ""
+    countries: []
 }
 
 const countriesStatsReducer = (state = initState, action) => {

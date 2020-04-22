@@ -26,4 +26,22 @@ const getCountriesLatestData = gql`
     }
 `
 
-export { getGlobalLatestData, getCountriesLatestData }
+const getStatesLatestData = gql`
+    {
+        StatesLatestData {
+        province
+        county
+        coordinates {
+            latitude
+            longitude
+        }
+        latest {
+            confirmed
+            deaths
+            recovered
+        }
+        }
+    }
+`
+
+export { getGlobalLatestData, getCountriesLatestData, getStatesLatestData }

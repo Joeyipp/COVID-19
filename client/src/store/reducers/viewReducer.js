@@ -1,5 +1,6 @@
 const initState = {
-    view: "WORLD"
+    view: "WORLD",
+    viewChange: false
 }
 
 const viewReducer = (state = initState, action) => {
@@ -8,7 +9,8 @@ const viewReducer = (state = initState, action) => {
             let { view } = action;
             return {
                 ...state,
-                view
+                view,
+                viewChange: !state.viewChange
             }
             
         default:

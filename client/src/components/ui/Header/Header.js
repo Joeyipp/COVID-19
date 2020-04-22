@@ -10,10 +10,6 @@ import { getGlobalLatestData } from '../../queries/Queries';
 
 class Header extends Component {
     
-    state = {
-        viewToggle: true
-    }
-
     componentDidUpdate = () => {
         const { globalStats, updateGlobalStats, graphQLGlobalLatestData } = this.props;
         if (globalStats.updated !== graphQLGlobalLatestData.GlobalLatestData.updated) {
@@ -25,17 +21,16 @@ class Header extends Component {
 
     render() {
         const { globalStats, countryStats, view, updateView } = this.props;
-        const classes = this.state.viewToggle ? "tracking-in-expand title" : "title";
         return (globalStats.updated && view.view === "WORLD"
             ? 
-            <div className="header tracking-in-expand">
-                <div className={classes} ref={this.wrapper}>{globalStats.header} STATISTICS</div>
-                <div className="tracking-in-expand subtitle">Last Updated: {moment.unix(globalStats.updated.toString().substr(0,10)).format("LLL")}</div>
+            <div className="header">
+                <div className={view.viewChange ? "fade-in title" : "tracking-in-expand title"} ref={this.wrapper}>{globalStats.header}</div>
+                <div className={view.viewChange ? "fade-in subtitle" : "tracking-in-expand subtitle"}>Last Updated: {moment.unix(globalStats.updated.toString().substr(0,10)).format("LLL")}</div>
             </div>
             :
-            <div className="header tracking-in-expand">
-                <div className={classes} ref={this.wrapper}>{countryStats.header} STATISTICS</div>
-                <div className="tracking-in-expand subtitle">
+            <div className={view.view === "WORLD" ? "header" : "fade-in header"}>
+                <div className={view.viewChange ? "fade-in title" : "fade-in-left title"} ref={this.wrapper}>{countryStats.header}</div>
+                <div className={view.viewChange ? "subtitle" : "subtitle"}>
                     Last Updated: {moment.unix(globalStats.updated.toString().substr(0,10)).format("LLL")}
                     <button className="return tracking-in-expand-fast" onClick={() => {updateView("WORLD")}}>
                         <span className="circle" aria-hidden="true">
