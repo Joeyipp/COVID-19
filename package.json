@@ -2,7 +2,7 @@
   "name": "covid",
   "version": "1.0.0",
   "description": "Work-in-progress",
-  "main": "index.js",
+  "main": "../server/app.js",
   "dependencies": {
     "axios": "^0.19.2",
     "cors": "^2.8.5",
@@ -16,7 +16,11 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "npm install --prefix client/",
+    "start": "npm start --prefix server",
+    "client": "npm start --prefix client/",
+    "heroku-postbuild": "NODE_ENV=false npm install --prefix client/ && npm run build --prefix client/"
   },
   "repository": {
     "type": "git",
