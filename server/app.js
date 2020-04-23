@@ -24,9 +24,9 @@ app.use('/graphql', graphqlHTTP({
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
+    app.use(express.static(path.resolve('../client/build')));
     app.get('*', (req, res) => {
-        res.send(path.resolve('../client/build/index.html'))
+        res.sendFile(path.resolve('../client/build/index.html'))
     })
 }
 
