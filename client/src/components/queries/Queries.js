@@ -29,19 +29,35 @@ const getCountriesLatestData = gql`
 const getStatesLatestData = gql`
     {
         StatesLatestData {
-        province
-        county
-        coordinates {
-            latitude
-            longitude
-        }
-        latest {
-            confirmed
-            deaths
+            state
+            positive
+            grade
+            negative
             recovered
-        }
+            death
+            hospitalized
+            totalTestResults
+            dateChecked
         }
     }
 `
 
-export { getGlobalLatestData, getCountriesLatestData, getStatesLatestData }
+const getCountiesLatestData = gql`
+    {
+        CountiesLatestData {
+            province
+            county
+            coordinates {
+                latitude
+                longitude
+            }
+            latest {
+                confirmed
+                deaths
+                recovered
+            }
+        }
+    }
+`
+
+export { getGlobalLatestData, getCountriesLatestData, getStatesLatestData, getCountiesLatestData }

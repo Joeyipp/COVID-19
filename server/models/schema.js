@@ -55,6 +55,21 @@ const LatestType = new GraphQLObjectType({
 const StateLatestDataType = new GraphQLObjectType({
     name: "StateLatestData",
     fields: () => ({
+        state: { type: GraphQLString },
+        positive: { type: GraphQLInt },
+        grade: { type: GraphQLString },
+        negative: { type: GraphQLInt },
+        recovered: { type: GraphQLInt },
+        death: { type: GraphQLInt },
+        hospitalized: { type: GraphQLInt },
+        totalTestResults: { type: GraphQLInt },
+        dateChecked: { type: GraphQLString }
+    })
+})
+
+const CountyLatestDataType = new GraphQLObjectType({
+    name: "CountyLatestData",
+    fields: () => ({
         id: { type: GraphQLInt },
         country: { type: GraphQLString },
         country_code: { type: GraphQLString },
@@ -94,6 +109,13 @@ const RootQuery = new GraphQLObjectType({
         },
         StatesLatestData: {
             type: new GraphQLList(StateLatestDataType),
+            async resolve(parent, args) {
+                let data = await axios.get('https://covidtracking.com/api/states')
+                return (data ? data.data : null)
+            }
+        },
+        CountiesLatestData: {
+            type: new GraphQLList(CountyLatestDataType),
             async resolve(parent, args) {
                 let data = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations?source=csbs')
                 return (data ? data.data.locations : null)

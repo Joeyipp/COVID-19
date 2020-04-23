@@ -20,7 +20,8 @@ class Header extends Component {
     wrapper = createRef();
 
     render() {
-        const { globalStats, countryStats, view, updateView } = this.props;
+        const { globalStats, countyStats,  stateStats, countryStats, view, updateView } = this.props;
+        let stats = view.view === "COUNTRY" ? countryStats : (view.view === "STATE" ? stateStats : countyStats);
         return (globalStats.updated && view.view === "WORLD"
             ? 
             <div className="header">
@@ -29,7 +30,7 @@ class Header extends Component {
             </div>
             :
             <div className={view.view === "WORLD" ? "header" : "fade-in header"}>
-                <div className={view.viewChange ? "fade-in title" : "fade-in-left title"} ref={this.wrapper}>{countryStats.header}</div>
+                <div className={view.viewChange ? "fade-in title" : "fade-in-left title"} ref={this.wrapper}>{stats.header}</div>
                 <div className={view.viewChange ? "subtitle" : "subtitle"}>
                     Last Updated: {moment.unix(globalStats.updated.toString().substr(0,10)).format("LLL")}
                     <button className="return tracking-in-expand-fast" onClick={() => {updateView("WORLD")}}>
@@ -47,6 +48,8 @@ class Header extends Component {
 const mapStateToProps = (state) => {
     return {
         view: state.view,
+        countyStats: state.countyStats,
+        stateStats: state.stateStats,
         countryStats: state.countryStats,
         globalStats: state.globalStats
     }

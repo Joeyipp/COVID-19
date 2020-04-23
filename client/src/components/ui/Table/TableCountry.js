@@ -2,28 +2,30 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux';
 import compose from "lodash.flowright";
-import { graphql } from 'react-apollo';
 import { getCode } from 'country-list';
 import {CountryISOCode, CC, FlagIcon} from './Flag.js'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVirus } from '@fortawesome/free-solid-svg-icons';
+
 // Custom Functions
 import { numberWithCommas } from '../../utils/utils';
-import { getCountriesLatestData } from '../../queries/Queries';
 import { updateView } from '../../../store/actions/viewActions';
 import { updateCountryStats } from '../../../store/actions/countryStatsAction';
-import { updateCountriesStats } from '../../../store/actions/countriesStatsActions';
 
-class TableBody extends Component {
+class TableCountry extends Component {
 
     state = {
         rowOpen: []
     }
 
     handleClick = (e) => {
+        
         // console.log(e.target.parentNode.childNodes[1].innerText)
+        const parentNode = e.target.parentNode;
         const country = e.target.parentNode.getAttribute('data-index') 
-                        ? this.props.countriesStats.countries.filter(country => country.country === e.target.parentNode.getAttribute('data-index'))[0] 
-                        : this.props.countriesStats.countries.filter(country => country.country === e.target.parentNode.childNodes[1].innerText)[0];
+                        ? this.props.countriesStats.countries.filter(country => country.country === parentNode.getAttribute('data-index'))[0] 
+                        : this.props.countriesStats.countries.filter(country => country.country === parentNode.childNodes[1].innerText)[0];
         const countryStats = {
             header: country.country,
             cases: parseInt(country.cases),
@@ -35,14 +37,14 @@ class TableBody extends Component {
             critical: parseInt(country.critical)
         }
         this.props.updateCountryStats(countryStats);
-        this.props.updateView(country.country);
 
         if (this.props.view.view === "WORLD") {
             this.setState({
-                rowOpen: []
+                rowOpen: [country.country]
             });
         }
-        if (this.state.rowOpen.includes(country.country)) {
+
+        else if (this.state.rowOpen.includes(country.country)) {
             let rowOpen = this.state.rowOpen.filter(item => item !== country.country);
             this.setState({
                 rowOpen
@@ -50,18 +52,22 @@ class TableBody extends Component {
         }
         else {
             let rowOpen = [...this.state.rowOpen, country.country]
+            
             this.setState({
                 rowOpen
             });
         }
+        this.props.updateView("COUNTRY");
     }
 
     clicker = () => {}
 
     render() {
-        return (
-             <tbody id="content-data">
-                {this.props.countriesStats.countries
+        const {countriesStats, view} = this.props;
+        return (countriesStats.countries
+            ? 
+            <tbody id="content-data">
+                {countriesStats.countries
                     .filter(country => (country.country !== "Total:" && country.country !== ""))
                     .map(country => {
                         let countryCode = (country.country in CountryISOCode) ? CountryISOCode[country.country] : getCode(country.country);
@@ -70,13 +76,13 @@ class TableBody extends Component {
 
                         return (
                             <Fragment key={country.country}>
-                                <tr data-index={country.country} onClick={this.handleClick} className={this.state.open ? "open" : ""}>
+                                <tr data-index={country.country} onClick={this.handleClick}>
                                     {(countryCode) ? <td className="country-column"><FlagIcon code={countryCode} size="lg"/><span>{country.country}</span></td> : <td className="country-column"><span>{country.country}</span></td>}
                                     <td className="text-red">{numberWithCommas(country.cases)}<div className="box-green">+ {numberWithCommas(country.todayCases)}</div></td>
                                     <td className="text-red">{numberWithCommas(country.deaths)}<div className="box-red">+ {numberWithCommas(country.todayDeaths)}</div></td>
                                     <td className="text-green">{numberWithCommas(country.recovered)}</td>
                                 </tr>
-                                {this.state.rowOpen.includes(country.country) && this.props.view.view !== "WORLD" ? 
+                                {this.state.rowOpen.includes(country.country) && view.view !== "WORLD" ? 
                                 <tr className="fragment-open">
                                     <td colSpan="4">
                                         <div className="content-row"><span>Total Confirmed</span><span className="text-red">{numberWithCommas(country.cases)}</span></div>
@@ -95,6 +101,10 @@ class TableBody extends Component {
                     }
                 )}
             </tbody>
+            :
+            <div className="fa-wrapper">
+                <FontAwesomeIcon icon={faVirus} spin size="3x" />
+            </div>
         )
     }
 }
@@ -111,12 +121,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateView: (view) => dispatch(updateView(view)),
-        updateCountryStats: (countryStats) => dispatch(updateCountryStats(countryStats)),
-        updateCountriesStats: (countriesStats) => dispatch(updateCountriesStats(countriesStats))
+        updateCountryStats: (countryStats) => dispatch(updateCountryStats(countryStats))
     }
 }
 
 export default compose(
-    graphql(getCountriesLatestData, {name: "graphQLCountriesLatestData"}),
     connect(mapStateToProps, mapDispatchToProps)
-)(TableBody);
+)(TableCountry);

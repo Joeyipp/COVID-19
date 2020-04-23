@@ -8,7 +8,7 @@ import Card from './Card';
 
 class Cards extends Component {
     render() {
-        const {cases, deaths, recovered, active} = this.props.view.view === "WORLD" ? this.props.globalStats : this.props.countryStats;
+        const {cases, deaths, recovered, active} = this.props.view.view === "WORLD" ? this.props.globalStats : (this.props.view.view === "COUNTRY" ? this.props.countryStats : (this.props.view.view === "STATE" ? this.props.stateStats : this.props.countyStats));
         return (cases 
             ?
             <div className="card-wrapper">
@@ -28,6 +28,8 @@ class Cards extends Component {
 const mapStateToProps = (state) => {
     return {
         view: state.view,
+        countyStats: state.countyStats,
+        stateStats: state.stateStats,
         countryStats: state.countryStats,
         globalStats: state.globalStats
     }
