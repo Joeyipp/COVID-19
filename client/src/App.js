@@ -10,7 +10,10 @@ import Dashboard from './components/ui/Page/Dashboard';
 
 // Apollo client setup
 const client = new ApolloClient({
-    uri: 'http://localhost:5000/graphql'
+    uri: 'http://localhost:5000/graphql',
+    fetchOptions: {
+        mode: 'no-cors',
+    }
 })
 
 class App extends Component {

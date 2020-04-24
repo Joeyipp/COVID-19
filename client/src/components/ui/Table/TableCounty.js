@@ -61,16 +61,18 @@ class TableCounty extends Component {
     clicker = () => {}
 
     render() {
+        let i = 0;
         let {countiesStats} = this.props;
         let sortedCountiesStats = countiesStats.counties.sort((a, b) => (b.latest.confirmed > a.latest.confirmed) ? 1 : ((b.latest.confirmed < a.latest.confirmed) ? -1 : 0));
         return (sortedCountiesStats.length ?
              <tbody id="content-data">
                 {countiesStats.counties
                     .map(county => {
+                        i = i + 1;
                         return (
                             <Fragment key={Math.random()}>
                                 <tr data-index={county.province + "," + county.county} onClick={this.handleClick} className={this.state.open ? "open" : ""}>
-                                    
+                                    <td>{i}</td>
                                     <td className="county-column" data-index={county.province + "," + county.county}>
                                             <span>{county.province} </span>
                                             <span className="small">{county.county}</span>

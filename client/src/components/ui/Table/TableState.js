@@ -62,15 +62,18 @@ class TableState extends Component {
     clicker = () => {}
 
     render() {
+        let i = 0;
         const {statesStats, countiesStats} = this.props;
         return (statesStats.states 
              ?
              <tbody id="content-data">
                 {statesStats.states.sort((a, b) => (b.positive > a.positive) ? 1 : ((b.positive < a.positive) ? -1 : 0))
                     .map(state => {
+                        i = i + 1;
                         return (
                             <Fragment key={Math.random()} >
                                 <tr key={Math.random()} data-index={state.state} onClick={this.handleClick}>
+                                    <td>{i}</td>
                                     <td className="country-column"><span>{stateAbbreviations[state.state] ? stateAbbreviations[state.state] : state.state}</span></td>
                                     <td className="text-red">{numberWithCommas(state.positive)}</td>
                                     <td className="text-red">{numberWithCommas(state.death)}</td>

@@ -73,6 +73,7 @@ class TableCountry extends Component {
     clicker = () => {}
 
     render() {
+        let i = 0;
         const {countriesStats, view} = this.props;
         return (countriesStats.countries
             ? 
@@ -80,6 +81,7 @@ class TableCountry extends Component {
                 {countriesStats.countries
                     .filter(country => (country.country !== "Total:" && country.country !== ""))
                     .map(country => {
+                        i = i + 1;
                         let countryCode = (country.country in CountryISOCode) ? CountryISOCode[country.country] : getCode(country.country);
                         countryCode = countryCode ? countryCode.toLowerCase() : "";
                         countryCode = (CC.includes(countryCode)) ? countryCode : "";
@@ -87,6 +89,7 @@ class TableCountry extends Component {
                         return (
                             <Fragment key={country.country}>
                                 <tr data-index={country.country} country-code={countryCode} onClick={this.handleClick}>
+                                    <td>{i}</td>
                                     {(countryCode) ? <td className="country-column"><FlagIcon code={countryCode} size="lg"/><span>{country.country}</span></td> : <td className="country-column"><span>{country.country}</span></td>}
                                     <td className="text-red">{numberWithCommas(country.cases)}<div className="box-green">+ {numberWithCommas(country.todayCases)}</div></td>
                                     <td className="text-red">{numberWithCommas(country.deaths)}<div className="box-red">+ {numberWithCommas(country.todayDeaths)}</div></td>

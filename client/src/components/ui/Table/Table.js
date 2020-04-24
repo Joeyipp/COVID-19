@@ -89,19 +89,19 @@ class Table extends Component {
                             {this.state.tableOption === "country" 
                                 ?
                                 <Fragment>
-                                    <TableHead header={["COUNTRY", "CONFIRMED", "DEATHS", "RECOVERED"]}/>
+                                    <TableHead header={["RANK", "COUNTRY", "CONFIRMED", "DEATHS", "RECOVERED"]}/>
                                     <TableCountry />
                                 </Fragment>
                                 : 
                                 (this.state.tableOption === "state" 
                                 ? 
                                 <Fragment>
-                                    <TableHead header={["US STATE", "CONFIRMED", "DEATHS", "RECOVERED"]}/>
+                                    <TableHead header={["RANK", "US STATE", "CONFIRMED", "DEATHS", "RECOVERED"]}/>
                                     <TableState />
                                 </Fragment>
                                 : 
                                 <Fragment>
-                                    <TableHead header={["US COUNTY", "CONFIRMED", "DEATHS", "RECOVERED"]}/>
+                                    <TableHead header={["RANK", "US COUNTY", "CONFIRMED", "DEATHS", "RECOVERED"]}/>
                                     <TableCounty />
                                 </Fragment>)
                             }
