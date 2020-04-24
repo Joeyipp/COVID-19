@@ -10,14 +10,18 @@ const initState = {
 const globalStatsReducer = (state = initState, action) => {
     switch (action.type) {
         case 'UPDATE_GLOBAL_STATS':
-            let { globalStats } = action;
+            let { cases, 
+                  deaths, 
+                  recovered, 
+                  updated } = action.globalStats;
+                  
             return {
                 ...state,
-                cases: globalStats.cases,
-                deaths: globalStats.deaths,
-                recovered: globalStats.recovered,
-                active: globalStats.cases - globalStats.deaths - globalStats.recovered,
-                updated: globalStats.updated
+                cases,
+                deaths,
+                recovered,
+                active: cases - deaths - recovered,
+                updated
             }
             
         default:

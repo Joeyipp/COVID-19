@@ -5,6 +5,7 @@ import compose from "lodash.flowright";
 import { getCode } from 'country-list';
 import {CountryISOCode, CC, FlagIcon} from './Flag.js'
 
+import n from 'country-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVirus } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,14 +21,23 @@ class TableCountry extends Component {
     }
 
     handleClick = (e) => {
-        
         // console.log(e.target.parentNode.childNodes[1].innerText)
         const parentNode = e.target.parentNode;
         const country = e.target.parentNode.getAttribute('data-index') 
                         ? this.props.countriesStats.countries.filter(country => country.country === parentNode.getAttribute('data-index'))[0] 
                         : this.props.countriesStats.countries.filter(country => country.country === parentNode.childNodes[1].innerText)[0];
+
+        const countryInfo = n.search(e.target.parentNode.getAttribute('data-index'))[0] || n.search(e.target.parentNode.getAttribute('country-code'))[0];
+        
         const countryStats = {
-            header: country.country,
+            header: country.country.toUpperCase(),
+            country_code: countryInfo ? countryInfo.code : "",
+            country_name: countryInfo ? countryInfo.name : "",
+            geo: {
+                latitude: countryInfo ? countryInfo.geo.latitude : "",
+                longitude: countryInfo ? countryInfo.geo.longitude : ""
+            },
+            capital: countryInfo ? countryInfo.capital : "",
             cases: parseInt(country.cases),
             todayCases: parseInt(country.todayCases),
             deaths: parseInt(country.deaths),
@@ -76,7 +86,7 @@ class TableCountry extends Component {
 
                         return (
                             <Fragment key={country.country}>
-                                <tr data-index={country.country} onClick={this.handleClick}>
+                                <tr data-index={country.country} country-code={countryCode} onClick={this.handleClick}>
                                     {(countryCode) ? <td className="country-column"><FlagIcon code={countryCode} size="lg"/><span>{country.country}</span></td> : <td className="country-column"><span>{country.country}</span></td>}
                                     <td className="text-red">{numberWithCommas(country.cases)}<div className="box-green">+ {numberWithCommas(country.todayCases)}</div></td>
                                     <td className="text-red">{numberWithCommas(country.deaths)}<div className="box-red">+ {numberWithCommas(country.todayDeaths)}</div></td>

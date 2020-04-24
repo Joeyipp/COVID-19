@@ -73,7 +73,7 @@ class Table extends Component {
 
     render() {
         return (
-            <div className="table-wrapper">
+            <div>
                 <div className="table-heading">
                     <button type="button" className="glow-on-hover" id="country" onClick={this.handleClick}>LIST BY COUNTRY</button>
                     <button type="button" className="glow-on-hover" id="state" onClick={this.handleClick}>LIST BY US STATE</button>

@@ -1,5 +1,12 @@
 const initState = {
     header: "",
+    country_code: "",
+    country_name: "",
+    geo: {
+        latitude: "",
+        longitude: ""
+    },
+    capital: "",
     cases: "",
     todayCases: "",
     deaths: "",
@@ -12,17 +19,33 @@ const initState = {
 const countryStatsReducer = (state = initState, action) => {
     switch (action.type) {
         case 'UPDATE_COUNTRY_STATS':
-            const { countryStats } = action;
+            const { header, 
+                    country_code, 
+                    country_name, 
+                    geo, 
+                    capital, 
+                    cases, 
+                    todayCases, 
+                    deaths, 
+                    todayDeaths, 
+                    recovered, 
+                    active, 
+                    critical } = action.countryStats;
+
             return {
                 ...state,
-                header: countryStats.header.toUpperCase(),
-                cases: countryStats.cases,
-                todayCases: countryStats.todayCases,
-                deaths: countryStats.deaths,
-                todayDeaths: countryStats.todayDeaths,
-                recovered: countryStats.recovered,
-                active: countryStats.active,
-                critical: countryStats.critical
+                header, 
+                country_code, 
+                country_name, 
+                geo, 
+                capital, 
+                cases, 
+                todayCases, 
+                deaths, 
+                todayDeaths, 
+                recovered, 
+                active, 
+                critical
             }
             
         default:

@@ -23,7 +23,7 @@ class TableState extends Component {
         if (us_state) {
             const stateStats = {
                 state_code: us_state.state,
-                state: stateAbbreviations[us_state.state] || us_state.state,
+                state: stateAbbreviations[us_state.state].toUpperCase() || us_state.state.toUpperCase(),
                 cases: us_state.positive,
                 grade: us_state.grade,
                 negative: us_state.negative,
