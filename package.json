@@ -4,6 +4,7 @@
   "description": "Work-in-progress",
   "main": "../server/app.js",
   "dependencies": {
+    "apollo-server-express": "^2.12.0",
     "axios": "^0.19.2",
     "cors": "^2.8.5",
     "create-react-app": "^3.4.1",

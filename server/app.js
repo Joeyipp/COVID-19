@@ -9,7 +9,7 @@ const schema = require('./models/schema')
 
 const server = new ApolloServer({
 	schema,
-	playground: false,
+	playground: true,
 	context: ({req, res}) => {
 		return {
 			request: req
