@@ -87,6 +87,7 @@ class TableState extends Component {
                                             .map(county => {
                                                 return (
                                                     <tr key={Math.random()}>
+                                                        <td></td>
                                                         <td className="row-item">{county.county}</td>
                                                         <td className="text-red">{numberWithCommas(county.latest.confirmed)}</td>
                                                         <td className="text-red">{numberWithCommas(county.latest.deaths)}</td>

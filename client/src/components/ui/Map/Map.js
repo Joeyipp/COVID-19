@@ -18,11 +18,7 @@ am4core.useTheme(am4themes_animated);
 
 class Map extends Component {
 
-    state = {
-        imageSeries: ""
-    }
-
-    componentDidMount() {
+    componentDidUpdate() {
         // Create map instance
         let chart = am4core.create("chartdiv", am4maps.MapChart);
 
@@ -58,18 +54,19 @@ class Map extends Component {
         // Zooming to Countries
         let lastSelected;
         polygonTemplate.events.on("hit", function(ev) {
-        if (lastSelected) {
-            // This line serves multiple purposes:
-            // 1. Clicking a country twice actually de-activates, the line below
-            //    de-activates it in advance, so the toggle then re-activates, making it
-            //    appear as if it was never de-activated to begin with.
-            // 2. Previously activated countries should be de-activated.
-            lastSelected.isActive = false;
-        }
-        ev.target.series.chart.zoomToMapObject(ev.target);
-        if (lastSelected !== ev.target) {
-            lastSelected = ev.target;
-        }
+            if (lastSelected) {
+                // This line serves multiple purposes:
+                // 1. Clicking a country twice actually de-activates, the line below
+                //    de-activates it in advance, so the toggle then re-activates, making it
+                //    appear as if it was never de-activated to begin with.
+                // 2. Previously activated countries should be de-activated.
+                lastSelected.isActive = false
+                
+            }
+            ev.target.series.chart.zoomToMapObject(ev.target);
+            if (lastSelected !== ev.target) {
+                lastSelected = ev.target
+            }
         })
 
         /* Create selected and hover states and set alternative fill color */
@@ -113,12 +110,12 @@ class Map extends Component {
         imageSeries.dataFields.value = "value";
 
         let circle = imageSeries.mapImages.template.createChild(am4core.Circle);
-        circle.radius = 1;
+        circle.radius = 3;
         circle.fillOpacity = 0.7;
         circle.propertyFields.fill = "color";
 
         let circle2 = imageSeries.mapImages.template.createChild(am4core.Circle);
-        circle2.radius = 1;
+        circle2.radius = 3;
         circle.fillOpacity = 0.7;
         circle2.propertyFields.fill = "color";
 
@@ -136,17 +133,11 @@ class Map extends Component {
         imageSeries.heatRules.push({
             "target": circle,
             "property": "radius",
-            "min": 1,
-            "max": 8,
+            "min": 4,
+            "max": 30,
             "dataField": "value"
         })
 
-        this.setState({
-            imageSeries
-        })
-    }
-
-    componentDidUpdate() {
         const {countriesStats} = this.props;
         let mapData = [];
         if (countriesStats.countries) {
@@ -166,7 +157,7 @@ class Map extends Component {
             })
         }
 
-        this.state.imageSeries.data = mapData
+        imageSeries.data = mapData
     }
 
     componentWillUnmount() {
@@ -175,7 +166,7 @@ class Map extends Component {
         }
     }
     
-    render() {   
+    render() {
         return (
             <div id="chartdiv" className="map"></div>
         );

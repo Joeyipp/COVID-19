@@ -18,8 +18,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
+    schema
+    // graphiql: true
 }))
 
 // Serve static assets if in production

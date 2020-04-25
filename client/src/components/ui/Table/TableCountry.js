@@ -97,7 +97,7 @@ class TableCountry extends Component {
                                 </tr>
                                 {this.state.rowOpen.includes(country.country) && view.view !== "WORLD" ? 
                                 <tr className="fragment-open">
-                                    <td colSpan="4">
+                                    <td colSpan="5">
                                         <div className="content-row"><span>Total Confirmed</span><span className="text-red">{numberWithCommas(country.cases)}</span></div>
                                         <div className="content-row"><span>Confirmed Today</span><span  className="text-red">{numberWithCommas(country.todayCases)}</span></div>
                                         <div className="content-row"><span>Total Deaths</span><span  className="text-red">{numberWithCommas(country.deaths)}</span></div>
