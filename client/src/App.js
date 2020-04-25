@@ -7,10 +7,11 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 // Components
 import SideNav from './components/ui/SideNav/SideNav';
 import Dashboard from './components/ui/Page/Dashboard';
+import News from './components/ui/Page/News';
 
 // Apollo client setup
 const client = new ApolloClient({
-    uri: 'http://localhost:5000/graphql'
+    uri: 'graphql'
 })
 
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
                         <SideNav />
                         <Switch>
                             <Route exact path='/' component={Dashboard} />
+                            <Route path='/news' component={News} />
                         </Switch>
                     </div>
                 </ApolloProvider>
