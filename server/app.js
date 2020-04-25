@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 // Enable cors
-app.use(cors());
+// app.use(cors());
 
 app.use('/graphql', cors(), graphqlHTTP({
     schema
