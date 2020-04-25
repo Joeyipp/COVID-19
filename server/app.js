@@ -33,7 +33,7 @@ app.use(allowCrossDomain);
 // Enable cors
 app.use(cors());
 
-app.use('/', graphqlHTTP({
+app.use('/graphql', graphqlHTTP({
     schema
     // graphiql: true
 }))
