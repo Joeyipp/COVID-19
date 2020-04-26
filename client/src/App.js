@@ -11,7 +11,7 @@ import News from './components/ui/Page/News';
 
 // Apollo client setup
 const client = new ApolloClient({
-    uri: 'graphql'
+    uri: '/graphql'
 })
 
 class App extends Component {
@@ -19,13 +19,11 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <ApolloProvider client={client}>
-                    <div>
-                        <SideNav />
-                        <Switch>
-                            <Route exact path='/' component={Dashboard} />
-                            <Route path='/news' component={News} />
-                        </Switch>
-                    </div>
+                    <SideNav />
+                    <Switch>
+                        <Route exact path='/' component={Dashboard} />
+                        <Route path='/news' component={News} />
+                    </Switch>
                 </ApolloProvider>
             </BrowserRouter>
         )

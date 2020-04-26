@@ -60,4 +60,64 @@ const getCountiesLatestData = gql`
     }
 `
 
-export { getGlobalLatestData, getCountriesLatestData, getStatesLatestData, getCountiesLatestData }
+const getStateLatestNews = gql`
+    query($q: String!) {
+        StateLatestNews(q: $q) {
+            source {
+                name
+            }
+            author
+            title
+            description
+            url
+            urlToImage
+            publishedAt
+            content
+            preview {
+                images
+            }
+        }
+    }
+`
+
+const getWorldLatestNews = gql`
+    {
+        WorldLatestNews {
+            source {
+                name
+            }
+            author
+            title
+            description
+            url
+            urlToImage
+            publishedAt
+            content
+            preview {
+                images
+            }
+        }
+    }
+`
+
+const getCountryBreakingNews = gql`
+    query($country: String!) {
+        CountryBreakingNews(country: $country) {
+            source {
+                name
+            }
+            author
+            title
+            description
+            url
+            urlToImage
+            publishedAt
+            content
+            preview {
+                images
+            }
+        }
+    }
+`
+
+export { getGlobalLatestData, getCountriesLatestData, getStatesLatestData, getCountiesLatestData, getStateLatestNews, getWorldLatestNews, getCountryBreakingNews }

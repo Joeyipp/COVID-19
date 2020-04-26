@@ -2,7 +2,7 @@ const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
-const graphqlHTTP = require('express-graphql');
+// const graphqlHTTP = require('express-graphql');
 const { ApolloServer } = require('apollo-server-express');
 
 const schema = require('./models/schema')

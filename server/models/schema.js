@@ -1,6 +1,11 @@
 const graphql = require('graphql');
 const axios = require('axios');
 const _ = require('lodash');
+const dotenv = require('dotenv');
+const {getLinkPreview} = require('link-preview-js');
+
+// load env vars
+dotenv.config({path: './config/config.env'});
 
 const { GraphQLObjectType, 
         GraphQLString, 
@@ -82,6 +87,40 @@ const CountyLatestDataType = new GraphQLObjectType({
     })
 })
 
+const LinkPreviewDataType = new GraphQLObjectType({
+    name: "LinkPreviewData",
+    fields: () => ({
+        url: { type: GraphQLString },
+        title: { type: GraphQLString },
+        siteName: { type: GraphQLString },
+        description: { type: GraphQLString },
+        images: { type: GraphQLString }
+    })
+})
+
+const SourceDataType = new GraphQLObjectType({
+    name: "SourceData",
+    fields: () => ({
+        id: { type: GraphQLString },
+        name: { type: GraphQLString }
+    })
+})
+
+const NewsLatestDataType = new GraphQLObjectType({
+    name: "NewsLatestData",
+    fields: () => ({
+        source: { type: SourceDataType },
+        author: { type: GraphQLString },
+        title: { type: GraphQLString },
+        description: { type: GraphQLString },
+        url: { type: GraphQLString },
+        urlToImage: { type: GraphQLString },
+        publishedAt: { type: GraphQLString },
+        content: { type: GraphQLString },
+        preview: {type: LinkPreviewDataType}
+    })
+})
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -120,8 +159,66 @@ const RootQuery = new GraphQLObjectType({
                 let data = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations?source=csbs')
                 return (data ? data.data.locations : null)
             }
+        },
+        CountryBreakingNews: {
+            type: new GraphQLList(NewsLatestDataType),
+            args: {country: {type: GraphQLString}},
+            async resolve(parent, args) {
+                let data = await axios.get("https://newsapi.org/v2/top-headlines?country=" + encodeURI(args.country) + "&language=en&sortBy=publishedAt&apiKey=a92cb68334974232b4f987644734a5a2")
+                if (data) {
+                    for (let i = 0; i < data.data.articles.length; i++) {
+                        try {
+                            data.data.articles[i].preview = await getLinkPreview(data.data.articles[i].url)
+                            data.data.articles[i].preview.images = data.data.articles[i].preview.images ? data.data.articles[i].preview.images[0] : ""
+                        }
+                        catch (err) {
+                            console.log("Invalid news url:", data.data.articles[i].url)
+                        }
+                    }
+                    return data.data.articles
+                }
+                return null
+            }
+        },
+        WorldLatestNews: {
+            type: new GraphQLList(NewsLatestDataType),
+            async resolve(parent, args) {
+                let data = await axios.get("https://newsapi.org/v2/everything?q=trump%20or%20covid%20or%20technology&language=en&sortBy=publishedAt&apiKey=a92cb68334974232b4f987644734a5a2")
+                if (data) {
+                    for (let i = 0; i < data.data.articles.length; i++) {
+                        try {
+                            data.data.articles[i].preview = await getLinkPreview(data.data.articles[i].url)
+                            data.data.articles[i].preview.images = data.data.articles[i].preview.images ? data.data.articles[i].preview.images[0] : ""
+                        }
+                        catch (err) {
+                            console.log("Invalid news url:", data.data.articles[i].url)
+                        }
+                    }
+                    return data.data.articles
+                }
+                return null
+            }
+        },
+        StateLatestNews: {
+            type: new GraphQLList(NewsLatestDataType),
+            args: {q: {type: GraphQLString}},
+            async resolve(parent, args) {
+                let data = await axios.get("https://newsapi.org/v2/everything?q=\"" + encodeURI(args.q) + "\"&sources=usa-today&language=en&sortBy=publishedAt&apiKey=a92cb68334974232b4f987644734a5a2")
+                if (data) {
+                    for (let i = 0; i < data.data.articles.length; i++) {
+                        try {
+                            data.data.articles[i].preview = await getLinkPreview(data.data.articles[i].url)
+                            data.data.articles[i].preview.images = data.data.articles[i].preview.images ? data.data.articles[i].preview.images[0] : ""
+                        }
+                        catch (err) {
+                            console.log("Invalid news url:", data.data.articles[i].url)
+                        }
+                    }
+                    return data.data.articles
+                }
+                return null
+            }
         }
-        
     }
 })
 
