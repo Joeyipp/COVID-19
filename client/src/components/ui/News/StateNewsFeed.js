@@ -11,12 +11,12 @@ import { getStateLatestNews } from '../../queries/Queries';
 function StateNewsFeed(props) {
     const { getStateLatestNews } = props;
     return (!getStateLatestNews.loading ?
-        <div className="news-column">
+        <div className="news-column hide-on-small">
             <div className="news-title"><span>{props.stateLocation}</span></div>
             <NewsCard news={getStateLatestNews.StateLatestNews}/>
         </div>
         :
-        <div className="news-loading">
+        <div className="news-loading hide-on-small">
             <FontAwesomeIcon icon={faSpinner} pulse size="3x" />
         </div>
     )

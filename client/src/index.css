@@ -752,6 +752,25 @@ margin-top: auto;
         margin: 0 30px;
     }
 
+    .news-main {
+        margin: 0px 15px 0px 0px;
+    }
+
+    .news-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        height: auto;
+    }
+
+    .news-wrapper .hide-on-small {
+        display: none;
+    }
+
+    .news-wrapper .news-column::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
     .card-wrapper {
         display: grid;
         grid-template-columns: 1fr;
