@@ -1,6 +1,6 @@
 ## COVID-19 Tracker
 ### Description
-A **COVID-19** Full Stack React Application with World + Map, US State and County Statistics as well as a simple **Global and State News Feed** page.
+A **COVID-19** Full Stack React Application with World + Map, US State and County Statistics <br>as well as a simple **Global and State News Feed** page.
 
 ## Screenshots
 **Dashboard**
@@ -9,7 +9,25 @@ A **COVID-19** Full Stack React Application with World + Map, US State and Count
 **News**
 <img alt="Dashboard Screenshot" src="https://github.com/Joeyipp/COVID-19/blob/master/images/news.PNG"/>
 
-### Built-With
+## Instructions
+To run the application locally:
+1. Clone this repository.
+2. Build **Express Back-end**
+```
+cd server/
+npm install
+node app.js
+```
+3. Edit your NewsAPI.org key in ```server/config/config.env```
+4. Build **React Front-end**
+```
+cd client/
+npm install
+npm start
+```
+4. Navigate to ```localhost:3000``` for the React Application.
+
+### Stacks
 **Front-end**
 ```
 ReactJS
@@ -27,23 +45,6 @@ GraphQL
 NewsAPI
 MongoDB
 ```
-### Instructions
-To run the scripts locally:
-1. Clone this repository.
-2. Build back-end
-```
-cd server
-npm install
-node app.js
-```
-3. Edit your NewsAPI.org key in ```server/config/config.env```
-4. Build front-end
-```
-cd client
-npm install
-npm start
-```
-4. Navigate to ```localhost:3000``` for the React Application.
 
 **Hosted on [Heroku](https://quiet-cove-33237.herokuapp.com/).**
 
