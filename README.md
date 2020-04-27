@@ -16,7 +16,7 @@ A **COVID-19** Dashboard (React) Application with
 ```
 cd server/
 npm install
-Edit your NewsAPI.org key in **server/config/config.env**
+Edit your NewsAPI.org key in server/config/config.env
 node app.js
 ```
 
@@ -25,7 +25,7 @@ node app.js
 cd client/
 npm install
 npm start
-Navigate to **localhost:3000** for the React Application
+Navigate to localhost:3000 to run the React Application
 ```
 
 ## Stacks
