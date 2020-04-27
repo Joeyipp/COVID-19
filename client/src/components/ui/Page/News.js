@@ -14,7 +14,7 @@ class News extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({
-            countryNews: e.target.childNodes[0].value
+            stateNews: e.target.childNodes[0].value
         })
     }
 
@@ -22,9 +22,9 @@ class News extends Component {
         return (
             <div className="news-main">
                 <div className="news-wrapper">
-                    <BreakingNewsFeed news={this.state.countryNews} handleSubmit={this.handleSubmit}/>
+                    <BreakingNewsFeed news={this.state.countryNews}/>
                     <WorldNewsFeed />
-                    <StateNewsFeed stateLocation={this.state.stateNews} news={this.state.stateNews} />
+                    <StateNewsFeed stateLocation={this.state.stateNews} news={this.state.stateNews}  handleSubmit={this.handleSubmit} />
                 </div>
             </div>
         )

@@ -374,7 +374,6 @@ margin-top: auto;
 
 .content-table {
     grid-column: 1/2;
-    table-layout: fixed;
     border-collapse: collapse;
     margin-top: 15px;
     padding: 10px;
@@ -677,6 +676,48 @@ margin-top: auto;
     color: white;
 }
 
+.news-wrapper .news-column .news-form {
+    display: block;
+    text-align: center;
+}
+
+.news-wrapper .news-column .news-form form {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.news-wrapper .news-column .news-form-input {
+    width: 85%;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    outline: none;
+    border: hidden;
+    border-bottom: 1.5px solid #eee;
+    box-shadow: 0 1px 0 0 #eee;
+    transition: 300ms ease; 
+}
+
+.news-wrapper .news-column .news-form-input:hover {
+    border-bottom: 1.5px solid var(--bg-primary);
+    box-shadow: 0 1px 0 0 #ce93d8;
+}
+
+.news-wrapper .news-column .news-form-button {
+    font-family: inherit;
+    background: var(--bg-primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 5px;
+    border: 1.5px solid var(--bg-secondary);
+    box-shadow: 0 1px 0 0 #eee;
+    transition: 300ms ease; 
+}
+
+.news-wrapper .news-column .news-form-button:hover {
+    transform: translateY(-2px);
+}
+
 .news-wrapper .news-column .news-card {
     border: 1px solid gray;
     border-radius: 5px;
@@ -728,8 +769,14 @@ margin-top: auto;
     margin-bottom: 20px;
 }
 
+/* Extra small devices (phones, 600px and down)
+@media only screen and (max-width: 600px) {...}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {...}  */
+
 /* Small screens */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 812px) {
     .navbar {
         bottom: 0;
         width: 100vw;
@@ -783,14 +830,20 @@ margin-top: auto;
         flex-direction: column;
         align-items: center;
         justify-items: center;
+        width: auto;
+        margin: 5px 0;
     }
 
     .content-table {
-        min-width: auto;
+        width: auto;
+    }
+    
+    .map {
+        display: none;
     }
 }
 
-/* Large screens */
+/* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
     .navbar {
         top: 0;

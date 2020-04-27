@@ -17,6 +17,7 @@
     "country-js": "0.0.9",
     "country-list": "^2.2.0",
     "graphql": "^15.0.0",
+    "graphql-tag": "^2.10.3",
     "lodash.flowright": "^3.5.0",
     "moment": "^2.24.0",
     "react": "^16.13.1",

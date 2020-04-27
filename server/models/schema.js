@@ -164,7 +164,7 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(NewsLatestDataType),
             args: {country: {type: GraphQLString}},
             async resolve(parent, args) {
-                let data = await axios.get("https://newsapi.org/v2/top-headlines?country=" + encodeURI(args.country) + "&language=en&sortBy=publishedAt&apiKey=a92cb68334974232b4f987644734a5a2")
+                let data = await axios.get("https://newsapi.org/v2/top-headlines?country=" + encodeURI(args.country) + "&language=en&sortBy=publishedAt&apiKey=" + process.env.NEWS_API)
                 if (data) {
                     for (let i = 0; i < data.data.articles.length; i++) {
                         try {
@@ -183,7 +183,7 @@ const RootQuery = new GraphQLObjectType({
         WorldLatestNews: {
             type: new GraphQLList(NewsLatestDataType),
             async resolve(parent, args) {
-                let data = await axios.get("https://newsapi.org/v2/everything?q=trump%20or%20covid%20or%20technology&language=en&sortBy=publishedAt&apiKey=a92cb68334974232b4f987644734a5a2")
+                let data = await axios.get("https://newsapi.org/v2/everything?q=trump%20or%20covid%20or%20technology&language=en&sortBy=publishedAt&apiKey=" + process.env.NEWS_API)
                 if (data) {
                     for (let i = 0; i < data.data.articles.length; i++) {
                         try {
@@ -203,7 +203,9 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(NewsLatestDataType),
             args: {q: {type: GraphQLString}},
             async resolve(parent, args) {
-                let data = await axios.get("https://newsapi.org/v2/everything?q=\"" + encodeURI(args.q) + "\"&sources=usa-today&language=en&sortBy=publishedAt&apiKey=a92cb68334974232b4f987644734a5a2")
+                let data = await axios.get("https://newsapi.org/v2/everything?q=\"" + encodeURI(args.q) + "\"&language=en&sortBy=publishedAt&apiKey=" + process.env.NEWS_API_PERSONAL)
+                console.log(data.data.totalResults)
+                console.log(data.data.articles.length)
                 if (data) {
                     for (let i = 0; i < data.data.articles.length; i++) {
                         try {
