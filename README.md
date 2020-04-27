@@ -1,12 +1,14 @@
-## COVID-19 Tracker
+## COVID-19 Dashboard Application
 ### Description
-A **COVID-19** Full Stack React Application with World + Map, US State and County Statistics <br>as well as a simple **Global and State News Feed** page.
+A **COVID-19** React Application with 
+- World + Map, US State and County Statistics and
+- A simple **Global and State News Feed** page.
 
 ## Screenshots
-**Dashboard**
+**Dashboard Page**
 <img alt="Dashboard Screenshot" src="https://github.com/Joeyipp/COVID-19/blob/master/images/dashboard.PNG"/>
 
-**News**
+**News Page**
 <img alt="Dashboard Screenshot" src="https://github.com/Joeyipp/COVID-19/blob/master/images/news.PNG"/>
 
 ## Instructions
@@ -27,7 +29,7 @@ npm start
 ```
 4. Navigate to ```localhost:3000``` for the React Application.
 
-### Stacks
+## Stacks
 **Front-end**
 ```
 ReactJS
