@@ -203,7 +203,7 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(NewsLatestDataType),
             args: {q: {type: GraphQLString}},
             async resolve(parent, args) {
-                let data = await axios.get("https://newsapi.org/v2/everything?q=\"" + encodeURI(args.q) + "\"&language=en&sortBy=publishedAt&apiKey=" + process.env.NEWS_API_PERSONAL)
+                let data = await axios.get("https://newsapi.org/v2/everything?q=\"" + encodeURI(args.q) + "\"&language=en&sortBy=publishedAt&apiKey=" + process.env.NEWS_API)
                 console.log(data.data.totalResults)
                 console.log(data.data.articles.length)
                 if (data) {
